@@ -156,6 +156,11 @@ setMonitoredItemSettings(UA_Server *server, UA_MonitoredItem *mon,
     if(mon->attributeID == UA_ATTRIBUTEID_VALUE) {
         const UA_VariableNode *vn = (const UA_VariableNode*)
             UA_NodeStore_get(server->nodestore, &mon->monitoredNodeId);
+        if(vn->eventNotify)
+         	mon->monitoredItemType = UA_MONITOREDITEMTYPE_EVENTNOTIFY;
+        else
+         	mon->monitoredItemType = UA_MONITOREDITEMTYPE_CHANGENOTIFY;
+
         if(vn && vn->nodeClass == UA_NODECLASS_VARIABLE &&
            samplingInterval <  vn->minimumSamplingInterval)
             samplingInterval = vn->minimumSamplingInterval;
@@ -188,7 +193,8 @@ setMonitoredItemSettings(UA_Server *server, UA_MonitoredItem *mon,
 
     /* Register sample job if reporting is enabled */
     if(monitoringMode == UA_MONITORINGMODE_REPORTING)
-        MonitoredItem_registerSampleJob(server, mon);
+    	if(mon->monitoredItemType == UA_MONITOREDITEMTYPE_CHANGENOTIFY)
+    		MonitoredItem_registerSampleJob(server, mon);
 }
 
 static const UA_String binaryEncoding = {sizeof("Default Binary")-1, (UA_Byte*)"Default Binary"};

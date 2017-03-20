@@ -607,6 +607,7 @@ copyVariableNodeAttributes(UA_Server *server, UA_VariableNode *vnode,
     vnode->accessLevel = attr->accessLevel;
     vnode->historizing = attr->historizing;
     vnode->minimumSamplingInterval = attr->minimumSamplingInterval;
+    vnode->eventNotify = attr->eventNotify;
     return copyCommonVariableAttributes(server, vnode, item, attr);
 }
 

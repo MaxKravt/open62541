@@ -120,6 +120,7 @@ int main(int argc, char** argv) {
     /* add a static variable node to the server */
     UA_VariableAttributes myVar;
     UA_VariableAttributes_init(&myVar);
+    myVar.eventNotify = true;
     myVar.description = UA_LOCALIZEDTEXT("en_US", "the answer");
     myVar.displayName = UA_LOCALIZEDTEXT("en_US", "the answer");
     myVar.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;

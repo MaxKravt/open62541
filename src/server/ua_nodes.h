@@ -157,6 +157,7 @@ typedef struct {
     UA_Byte accessLevel;
     UA_Double minimumSamplingInterval;
     UA_Boolean historizing; /* currently unsupported */
+    UA_Boolean eventNotify;
 } UA_VariableNode;
 
 /**
